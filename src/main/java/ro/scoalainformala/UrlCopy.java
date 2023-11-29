@@ -32,23 +32,22 @@ public class UrlCopy {
             } else {
                 System.err.println("No such directory. Enter new value.");
             }
-        }while (v == false);
+        } while (v == false);
         FILE_PATH = testFileIn;
 
 
         try {
             URL resourceUrl = new URL(URL_PATH);
 
-            try {
+            try (BufferedWriter out = new BufferedWriter(new FileWriter(FILE_PATH))) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(resourceUrl.openStream()));
-                BufferedWriter out = new BufferedWriter(new FileWriter(FILE_PATH));
 
                 String line;
                 int nrWords;
                 String newLine;
                 while ((line = in.readLine()) != null) {
-                    nrWords =  line.trim().split("\\s+").length;
-                    if(line.trim().isEmpty()) {
+                    nrWords = line.trim().split("\\s+").length;
+                    if (line.trim().isEmpty()) {
                         nrWords = 0;
                     }
                     //System.out.println(nrWords + " " + line);
@@ -56,11 +55,11 @@ public class UrlCopy {
                     out.write(newLine);
                     out.newLine();
                 }
-            } catch(IOException e) {
+            } catch (IOException e) {
                 System.err.println("An error has occurred!");
             }
 
-        } catch(MalformedURLException e) {
+        } catch (MalformedURLException e) {
             System.err.println("An error has occurred!");
         }
 
